@@ -1410,6 +1410,40 @@ textarea.form-input {
         font-size: 0.75rem !important;
     }
 
+    /* Prevent awkward word breaking in card titles */
+    .card-title-badge {
+        flex-wrap: nowrap !important;
+        gap: 0.4rem !important;
+    }
+
+    .card-title-badge h3 {
+        font-size: 1rem !important; /* Scale down to fit 1 line */
+        word-break: keep-all !important;
+        white-space: nowrap !important;
+        letter-spacing: -0.03em !important;
+    }
+
+    .ai-pill {
+        font-size: 0.6rem !important;
+        padding: 0.2rem 0.4rem !important;
+        white-space: nowrap !important;
+        flex-shrink: 0 !important;
+    }
+
+    /* AI Tech Stats Layout Fix: 1 column prevents text squeezing and awkward line breaks */
+    .ai-tech-stats {
+        grid-template-columns: 1fr !important; 
+        gap: 0.8rem !important;
+    }
+
+    .tech-indicator-item {
+        word-break: keep-all !important;
+    }
+
+    .tech-ind-label, .tech-ind-val {
+        word-break: keep-all !important;
+    }
+
     /* Price Exchange Box layout: Stack vertically as 1-column grid to prevent clipping */
     .exchanges-row {
         grid-template-columns: 1fr !important;
