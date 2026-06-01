@@ -1195,8 +1195,8 @@ textarea.form-input {
 }
 
 /* 3. Standard Mobile Viewports (600px and under) - Optimized for 9:16 and dynamic heights */
-/* 3. Standard Mobile Viewports & QHD+ Flagship Portrait Displays (e.g., Galaxy S26 Ultra 1440px Viewport) */
-@media (max-width: 768px), (orientation: portrait) and (max-width: 1440px) {
+/* 3. Standard Mobile Viewports & QHD+ Portrait Displays (Unified Portrait Override) */
+@media (max-width: 768px), (orientation: portrait) {
     body {
         padding-bottom: calc(1.5rem + env(safe-area-inset-bottom));
         overflow-x: hidden !important;
@@ -1229,6 +1229,7 @@ textarea.form-input {
         width: 100% !important;
         max-width: 100% !important;
         box-sizing: border-box !important;
+        overflow: hidden !important; /* Prevent any wild child content from pushing horizontally */
     }
 
     /* Header Compact Redesign */
@@ -1330,20 +1331,25 @@ textarea.form-input {
         font-size: 0.72rem !important;
     }
 
-    /* AI Trading Card: downscale to secure 1-line spacing */
+    /* AI Trading Card: stacked layout for maximum room and absolute 1-line safety */
     .target-row {
-        padding: 0.6rem 0.75rem !important;
-        border-radius: 8px !important;
+        padding: 0.7rem 0.85rem !important;
+        border-radius: 10px !important;
         width: 100% !important;
         box-sizing: border-box !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 0.35rem !important;
     }
 
     .target-label {
         font-size: 0.78rem !important;
+        width: 100% !important;
     }
 
     .target-value {
-        font-size: 0.86rem !important; /* Enforces absolute 1-line fitting without overlapping */
+        font-size: 0.95rem !important; /* High legibility and zero clipping */
+        align-self: flex-end !important; /* Neatly aligned to the right */
         white-space: nowrap !important;
     }
 
