@@ -35,6 +35,13 @@
 }
 
 /* Reset & Global Styles */
+html {
+    touch-action: manipulation;
+    -webkit-text-size-adjust: 100%;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -1191,11 +1198,23 @@ textarea.form-input {
 @media (max-width: 600px) {
     body {
         padding-bottom: calc(1.5rem + env(safe-area-inset-bottom));
+        overflow-x: hidden;
+    }
+
+    .container {
+        padding-left: calc(0.8rem + env(safe-area-inset-left));
+        padding-right: calc(0.8rem + env(safe-area-inset-right));
     }
 
     .dashboard-grid {
         grid-template-columns: 1fr;
-        gap: 1rem;
+        gap: 0.85rem; /* Slightly tighter gaps for screen balance */
+    }
+
+    /* Reduce card padding to save screen space and improve visual balance on flagships like S26 Ultra */
+    .glass-card {
+        padding: 1.15rem 1rem;
+        border-radius: 14px;
     }
 
     /* Header Compact Redesign */
@@ -1250,38 +1269,39 @@ textarea.form-input {
     }
 
     .ex-price {
-        font-size: 1.6rem;
+        font-size: 1.45rem; /* Perfectly scaled to prevent wrapping on narrow viewports */
     }
 
     /* Stats Grid optimization for 2-column flow */
     .stats-grid {
         grid-template-columns: 1fr 1fr;
-        gap: 0.6rem;
+        gap: 0.5rem;
     }
 
     .stat-item {
-        padding: 0.6rem;
+        padding: 0.5rem;
     }
 
     .stat-val {
-        font-size: 0.88rem;
+        font-size: 0.84rem;
     }
 
-    /* AI Trading Card polish */
+    /* AI Trading Card polish for S26 Ultra size balance */
     .target-row {
-        padding: 0.75rem 0.9rem;
+        padding: 0.65rem 0.8rem;
+        border-radius: 8px;
     }
 
     .target-label {
-        font-size: 0.82rem;
+        font-size: 0.8rem;
     }
 
     .target-value {
-        font-size: 0.95rem; /* Highly scale-friendly for narrow displays */
+        font-size: 0.9rem; /* Perfect sizing balance */
     }
 
     .trading-rationale {
-        padding: 0.8rem 0.9rem;
+        padding: 0.75rem 0.9rem;
         font-size: 0.8rem;
         line-height: 1.55;
     }
