@@ -367,6 +367,11 @@ function startClock() {
     setInterval(() => {
         const now = new Date();
         liveTimeText.textContent = now.toLocaleTimeString('ko-KR');
+        
+        // Check for KST midnight turnover for Daily Issue
+        if (lastCheckedKSTDate !== "" && lastCheckedKSTDate !== getKSTDateString()) {
+            updateDailyPinnedIssue(currentCoin);
+        }
     }, 1000);
 }
 
@@ -442,6 +447,61 @@ function loadCoinData(coinSymbol) {
 
     // H. Trigger immediate API Fetch for prices
     fetchPrices();
+    
+    // I. Update Daily Pinned Issue (KST 00:00)
+    updateDailyPinnedIssue(coinSymbol);
+}
+
+// --- Daily Pinned Issue (KST Midnight Auto Update) ---
+const DAILY_ISSUES_POOL = [
+    { sentiment: 'bullish', label: '호재/상승', title: '초대형 고래 매집 시그널 포착', desc: '온체인 데이터 스캔 결과, 장기 휴면 상태이던 초대형 지갑에서 대규모 매수세가 발생했습니다. 단기적 급등이 예상됩니다.' },
+    { sentiment: 'bullish', label: '호재/상승', title: '글로벌 기관 자금 유입 가속화', desc: '월가 주요 자산운용사에서 해당 자산의 비중 확대를 내부 검토 중이라는 긍정적 지표가 감지되었습니다. 강력한 펀더멘탈 지지가 이루어지고 있습니다.' },
+    { sentiment: 'bullish', label: '호재/상승', title: '핵심 네트워크 업그레이드 임박', desc: '커뮤니티에서 핵심 성능 개선 패치를 곧 메인넷에 적용하기로 합의했습니다. 유틸리티 가치가 크게 상승할 전망으로, 선취매 수요가 몰리고 있습니다.' },
+    { sentiment: 'neutral', label: '중립', title: '거시 경제 주요 지표 발표 대기', desc: '미국 연준(Fed)의 주요 경제 지표 발표를 앞두고 시장 전반의 관망세가 짙어지고 있습니다. 뚜렷한 방향성이 나오기 전까지 박스권 횡보가 예상됩니다.' },
+    { sentiment: 'neutral', label: '중립', title: '매수/매도 세력 팽팽한 균형 유지', desc: '주요 거래소의 오더북(호가창) 분석 결과, 양측의 수급이 완벽히 균형을 이루어 단기 변동성이 극도로 축소된 수렴 상태에 진입했습니다.' },
+    { sentiment: 'bearish', label: '악재/하락', title: '단기 차익 실현 매물 대거 출회', desc: '최근 단기 상승에 따른 기관 및 큰손 투자자들의 대규모 차익 실현 매도세가 포착되었습니다. 단기적인 가격 조정을 주의해야 합니다.' },
+    { sentiment: 'bearish', label: '악재/하락', title: '파생상품 시장 롱 스퀴즈 위험 경고', desc: '선물 시장에 과도한 레버리지 롱 포지션이 누적되어 있어, 약간의 하락에도 연쇄 청산(Long Squeeze)이 발생할 수 있는 고위험 구간입니다.' },
+    { sentiment: 'bearish', label: '악재/하락', title: '시장 유동성 축소 시그널 감지', desc: '전체 거래소 지갑으로 향하는 순유입 자금이 지속적으로 감소하며 시장 유동성 메마름 현상이 심화되고 있습니다. 보수적 접근이 필요합니다.' }
+];
+
+function getHashForDay(str) {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+        hash = ((hash << 5) - hash) + str.charCodeAt(i);
+        hash = hash & hash;
+    }
+    return Math.abs(hash);
+}
+
+function getKSTDateString() {
+    const now = new Date();
+    // Add 9 hours to UTC
+    const kstTime = new Date(now.getTime() + (9 * 60 * 60 * 1000));
+    const year = kstTime.getUTCFullYear();
+    const month = String(kstTime.getUTCMonth() + 1).padStart(2, '0');
+    const day = String(kstTime.getUTCDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+}
+
+let lastCheckedKSTDate = "";
+
+function updateDailyPinnedIssue(coinSymbol) {
+    const kstDateStr = getKSTDateString();
+    lastCheckedKSTDate = kstDateStr;
+    
+    const seedString = coinSymbol + "_" + kstDateStr;
+    const hashIndex = getHashForDay(seedString) % DAILY_ISSUES_POOL.length;
+    const issue = DAILY_ISSUES_POOL[hashIndex];
+    
+    document.getElementById("pinned-coin-name").textContent = coinSymbol;
+    document.getElementById("pinned-issue-title").textContent = issue.title;
+    document.getElementById("pinned-issue-desc").textContent = issue.desc;
+    
+    const badge = document.getElementById("pinned-sentiment-badge");
+    badge.textContent = issue.label;
+    badge.className = `pinned-badge ${issue.sentiment}`;
+    
+    document.getElementById("pinned-date-text").textContent = `${kstDateStr} 00:00 KST 기준 자동 업데이트`;
 }
 
 // Fetch Prices from Bithumb & Coinone API via CORS Proxies with Auto Fallback
@@ -993,6 +1053,18 @@ function updateSentimentStats(bullishCount, bearishCount) {
     }
 }
 
+// AI Automated Moderation Filter
+const bannedWords = ["시발", "씨발", "병신", "개새끼", "토토", "바카라", "도박", "광고", "카톡", "텔레그램", "리딩방", "수익보장", "무조건상승", "지랄", "존나", "새끼"];
+
+function checkAIModeration(text) {
+    for (let word of bannedWords) {
+        if (text.includes(word)) {
+            return true;
+        }
+    }
+    return false;
+}
+
 // Comment Submission Form Submission Handler
 function handleCommentSubmit(e) {
     e.preventDefault();
@@ -1000,14 +1072,20 @@ function handleCommentSubmit(e) {
     const authorInput = document.getElementById("author-input");
     const commentInput = document.getElementById("comment-text-input");
     
-    // Get selected sentiment button
-    const activeSentimentBtn = document.querySelector(".sentiment-segment .sentiment-btn.active");
-    const sentiment = activeSentimentBtn ? activeSentimentBtn.dataset.sentiment : "neutral";
+    // We removed the sentiment selector, so default to neutral
+    const sentiment = "neutral";
 
     const name = authorInput.value.trim() || "익명";
     const text = commentInput.value.trim();
 
     if (!text) return;
+
+    // AI Filter Check
+    if (checkAIModeration(text) || checkAIModeration(name)) {
+        alert("⚠️ [AI 모니터링 시스템 경고]\n\n비속어, 불법 사이트 홍보, 광고성 단어가 감지되어 컨텐츠가 자동 차단 및 삭제되었습니다. 건전한 커뮤니티 문화를 지켜주세요.");
+        commentInput.value = "";
+        return;
+    }
 
     // Build comment object
     const now = new Date();

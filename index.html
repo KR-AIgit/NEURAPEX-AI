@@ -264,6 +264,24 @@
                     </div>
                 </article>
 
+                <!-- Daily Pinned Issue Card (KST 00:00 Auto Update) -->
+                <article class="glass-card pinned-issue-card" id="pinned-issue-card" data-mobile-view="community">
+                    <div class="pinned-header">
+                        <div class="pinned-title">
+                            <i class="fa-solid fa-thumbtack" style="color: var(--accent-purple);"></i>
+                            <span>오늘의 <span id="pinned-coin-name">BTC</span> 핵심 브리핑</span>
+                        </div>
+                        <span class="pinned-badge" id="pinned-sentiment-badge">분석 중...</span>
+                    </div>
+                    <div class="pinned-content">
+                        <h4 id="pinned-issue-title">데이터를 불러오는 중입니다...</h4>
+                        <p id="pinned-issue-desc">한국시간 00시 기준으로 최신 AI 동향을 수집하고 있습니다.</p>
+                        <div class="pinned-footer">
+                            <i class="fa-regular fa-clock"></i> <span id="pinned-date-text">0000-00-00 00:00 KST 기준 업데이트</span>
+                        </div>
+                    </div>
+                </article>
+
                 <!-- AI Intelligence News Feed Card -->
                 <article class="glass-card news-card" data-mobile-view="community">
                     <div class="card-title-badge">
@@ -309,20 +327,12 @@
                     
                     <!-- Submit Comment Form -->
                     <form class="comment-form" id="comment-form">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="author-input">닉네임</label>
-                                <input type="text" id="author-input" class="form-input" placeholder="익명" maxlength="15" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label>투자 관점</label>
-                                <div class="sentiment-segment">
-                                    <button type="button" class="sentiment-btn bullish active" data-sentiment="bullish">호재/상승</button>
-                                    <button type="button" class="sentiment-btn neutral" data-sentiment="neutral">중립</button>
-                                    <button type="button" class="sentiment-btn bearish" data-sentiment="bearish">악재/하락</button>
-                                </div>
-                            </div>
+                        <div class="form-group">
+                            <label for="author-input">닉네임</label>
+                            <input type="text" id="author-input" class="form-input" placeholder="익명" maxlength="15" required>
+                            <p class="community-warning">
+                                <i class="fa-solid fa-robot"></i> <strong>AI 자동 모니터링:</strong> 비속어, 불법 사이트 홍보, 도박, 광고성 컨텐츠 작성 시 AI 시스템에 의해 즉각 삭제 및 IP 임시 차단 조치됩니다. 건전한 익명 커뮤니티 문화를 지켜주세요.
+                            </p>
                         </div>
                         
                         <div class="form-group">

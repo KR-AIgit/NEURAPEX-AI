@@ -763,6 +763,98 @@ header::before {
     color: var(--text-secondary);
 }
 
+/* Daily Pinned Issue Card */
+.pinned-issue-card {
+    background: linear-gradient(135deg, rgba(20, 25, 40, 0.8), rgba(10, 15, 25, 0.9));
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.pinned-issue-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(to bottom, var(--accent-purple), var(--accent-cyan));
+}
+
+.pinned-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 0.6rem;
+    margin-bottom: 0.8rem;
+}
+
+.pinned-title {
+    font-family: var(--font-outfit);
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.pinned-title span {
+    letter-spacing: 0.02em;
+}
+
+.pinned-badge {
+    font-size: 0.65rem;
+    font-weight: 800;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+
+.pinned-badge.bullish {
+    background: rgba(16, 185, 129, 0.15);
+    color: var(--sentiment-bullish);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.pinned-badge.bearish {
+    background: rgba(244, 63, 94, 0.15);
+    color: var(--sentiment-bearish);
+    border: 1px solid rgba(244, 63, 94, 0.3);
+}
+
+.pinned-badge.neutral {
+    background: rgba(156, 163, 175, 0.15);
+    color: var(--sentiment-neutral);
+    border: 1px solid rgba(156, 163, 175, 0.3);
+}
+
+.pinned-content h4 {
+    font-family: var(--font-outfit);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.4rem;
+    line-height: 1.4;
+}
+
+.pinned-content p {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin-bottom: 0.8rem;
+}
+
+.pinned-footer {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
 /* AI Intelligence News Feed Card */
 .news-card {
     display: flex;
@@ -1014,6 +1106,27 @@ header::before {
     font-size: 0.78rem;
     font-weight: 600;
     color: var(--text-secondary);
+}
+
+.community-warning {
+    font-size: 0.7rem;
+    color: rgba(244, 63, 94, 0.9);
+    background: rgba(244, 63, 94, 0.05);
+    border-left: 2px solid var(--sentiment-bearish);
+    padding: 0.5rem 0.6rem;
+    margin-top: 0.2rem;
+    border-radius: 4px;
+    line-height: 1.4;
+    word-break: keep-all;
+}
+
+.community-warning i {
+    color: var(--sentiment-bearish);
+    margin-right: 0.2rem;
+}
+
+.community-warning strong {
+    color: var(--text-primary);
 }
 
 .form-input {
