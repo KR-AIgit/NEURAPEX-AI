@@ -1235,6 +1235,15 @@ textarea.form-input {
         max-width: 100% !important;
     }
 
+    /* Constrain columns to prevent wide content from breaking layout balance */
+    .left-column, .right-column {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        box-sizing: border-box !important;
+        gap: 0.85rem !important;
+    }
+
     /* Save screen space and prevent card box clipping */
     .glass-card {
         padding: 1.15rem 1rem !important;
