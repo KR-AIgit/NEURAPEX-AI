@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEURAPEX AI | 실시간 빗썸 & 코인원 지능 시황 분석기</title>
+    <meta name="description" content="빗썸과 코인원에서 공통으로 거래되는 암호화폐의 실시간 가격 비교, 아비트라지 차액 분석, AI 심층 애널리스트 리포트, 소셜 감성 상태 및 맞춤형 뉴스를 실시간 제공하는 인공지능 시황 분석 대시보드입니다.">
+    
+    <!-- Stylesheet Link -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- FontAwesome & Ionicons CDN for Premium Vector Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js CDN for Glowing Charts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <div class="container">
+        
+        <!-- Header Section -->
+        <header class="glass-card">
+            <div class="logo-section">
+                <h1><i class="fa-solid fa-brain-circuit"></i> NEURAPEX AI</h1>
+                <span>Advanced Neural Intelligence Board</span>
+            </div>
+            
+            <div class="status-indicators">
+                <div class="indicator" id="network-status-container">
+                    <span class="status-dot active" id="network-status-dot"></span>
+                    <span id="network-status-text">연결 중...</span>
+                </div>
+                <div class="indicator">
+                    <i class="fa-regular fa-clock" style="color: var(--accent-cyan);"></i>
+                    <span id="live-time-text">00:00:00</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Dashboard Grid Layout -->
+        <main class="dashboard-grid">
+            
+            <!-- Left Column: Settings, Price Arbitrage, AI Deep Report -->
+            <section class="left-column">
+                
+                <!-- Coin Selector Panel -->
+                <article class="glass-card selector-card">
+                    <label for="coin-select"><i class="fa-solid fa-coins" style="color: var(--accent-purple);"></i> 분석 코인 선택</label>
+                    <div class="custom-select-wrapper">
+                        <select id="coin-select" class="custom-select">
+                            <option value="BTC" selected>Bitcoin (BTC) - 비트코인</option>
+                            <option value="ETH">Ethereum (ETH) - 이더리움</option>
+                            <option value="SOL">Solana (SOL) - 솔라나</option>
+                            <option value="XRP">Ripple (XRP) - 리플</option>
+                            <option value="ADA">Cardano (ADA) - 에이디에이</option>
+                            <option value="DOGE">Dogecoin (DOGE) - 도지코인</option>
+                            <option value="LINK">Chainlink (LINK) - 체인링크</option>
+                            <option value="DOT">Polkadot (DOT) - 폴카닷</option>
+                            <option value="BCH">Bitcoin Cash (BCH) - 비트코인캐시</option>
+                            <option value="ALGO">Algorand (ALGO) - 알고랜드</option>
+                        </select>
+                    </div>
+                </article>
+
+                <!-- Side-by-Side Real-Time Exchange Price Card -->
+                <article class="glass-card comparison-card" id="price-card">
+                    <div class="card-title-badge">
+                        <h3><i class="fa-solid fa-arrows-left-right"></i> 실시간 거래소 시세 비교</h3>
+                        <span class="ai-pill">Real-time Premium</span>
+                    </div>
+                    
+                    <div class="exchanges-row">
+                        <!-- Bithumb Price Box -->
+                        <div class="exchange-price-box bithumb">
+                            <span class="ex-name">Bithumb (빗썸)</span>
+                            <div class="ex-price" id="price-bithumb">0 KRW</div>
+                        </div>
+                        
+                        <!-- Coinone Price Box -->
+                        <div class="exchange-price-box coinone">
+                            <span class="ex-name">Coinone (코인원)</span>
+                            <div class="ex-price" id="price-coinone">0 KRW</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Arbitrage Premium Calculator Box -->
+                    <div class="arbitrage-insight-box">
+                        <span class="arb-label"><i class="fa-solid fa-circle-nodes"></i> 아비트라지 차액 (김프)</span>
+                        <div class="arb-value" id="arbitrage-value">계산 중...</div>
+                        <div class="arb-desc" id="arbitrage-direction">양대 거래소 가격 비교 분석 중</div>
+                    </div>
+                    
+                    <!-- 24-Hour Statistics -->
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <span class="stat-label">24H 변동률</span>
+                            <span class="stat-val" id="stat-change-rate">0.00%</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">24H 최고가</span>
+                            <span class="stat-val" id="stat-high">0 KRW</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">24H 최저가</span>
+                            <span class="stat-val" id="stat-low">0 KRW</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">24H 거래대금</span>
+                            <span class="stat-val" id="stat-volume">0 KRW</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- NEW: AI Trading Recommendation Card (Highly Eye-Catching) -->
+                <article class="glass-card ai-trading-card" id="ai-trading-card">
+                    <div class="card-title-badge">
+                        <h3 style="color: var(--accent-cyan);"><i class="fa-solid fa-crosshairs"></i> [AI 트레이딩]</h3>
+                        <span class="ai-pill" style="background: linear-gradient(135deg, var(--accent-cyan), var(--sentiment-bullish));">Neural Trade v1.0</span>
+                    </div>
+                    
+                    <div class="trading-targets">
+                        <!-- Entry Recommendation Zone -->
+                        <div class="target-row entry">
+                            <span class="target-label"><i class="fa-solid fa-right-to-bracket"></i> 진입 추천 구간</span>
+                            <span class="target-value" id="trade-entry">AI 연산 중...</span>
+                        </div>
+                        
+                        <!-- Take Profit Target -->
+                        <div class="target-row profit">
+                            <span class="target-label"><i class="fa-solid fa-arrow-trend-up"></i> 목표 익절 구간</span>
+                            <span class="target-value" id="trade-profit">AI 연산 중...</span>
+                        </div>
+                        
+                        <!-- Stop Loss Limit -->
+                        <div class="target-row stop">
+                            <span class="target-label"><i class="fa-solid fa-circle-exclamation"></i> 손절 제한 구간</span>
+                            <span class="target-value" id="trade-stop">AI 연산 중...</span>
+                        </div>
+                    </div>
+                    
+                    <!-- AI Trading Rationale Basis -->
+                    <div class="trading-rationale">
+                        <span class="trading-rationale-title"><i class="fa-solid fa-brain"></i> AI 거래 설계 근거 분석</span>
+                        <div id="trade-rationale-text">
+                            가격 데이터를 실시간 스캔하여 신경망 손익비 모델에 따른 진입 Rationale을 산출 중입니다...
+                        </div>
+                    </div>
+                </article>
+
+                <!-- AI Analyst Deep Neural Insights Report Card -->
+                <article class="glass-card ai-report-card">
+                    <div class="ai-header">
+                        <div class="ai-icon-wrapper">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        </div>
+                        <div class="ai-header-text">
+                            <h3>AI 스마트 애널리스트</h3>
+                            <p>Neural Prediction Engine v4.2</p>
+                        </div>
+                        <span class="ai-signal-badge strong-buy" id="ai-signal">BUY</span>
+                    </div>
+                    
+                    <div class="ai-report-content">
+                        <!-- Trend Insight -->
+                        <div>
+                            <span class="ai-section-title"><i class="fa-solid fa-chart-line"></i> AI 트렌드 종합 판단</span>
+                            <div class="ai-insight-text" id="ai-trend-summary">
+                                데이터를 분석하여 실시간 인공지능 시황 리포트를 생성하는 중입니다...
+                            </div>
+                        </div>
+                        
+                        <!-- Technical Indicator Stats -->
+                        <div>
+                            <span class="ai-section-title"><i class="fa-solid fa-gears"></i> 인공지능 지표 분석계</span>
+                            <div class="ai-tech-stats">
+                                <div class="tech-indicator-item">
+                                    <span class="tech-ind-label">AI 종합 매수강도</span>
+                                    <span class="tech-ind-val" id="tech-ai-score" style="color: var(--sentiment-bullish);">82%</span>
+                                </div>
+                                <div class="tech-indicator-item">
+                                    <span class="tech-ind-label">고래 축적도 (Whale)</span>
+                                    <span class="tech-ind-val" id="tech-whale-accumulation">집중 축적 중</span>
+                                </div>
+                                <div class="tech-indicator-item">
+                                    <span class="tech-ind-label">RSI 모멘텀 분석</span>
+                                    <span class="tech-ind-val" id="tech-rsi">54.2 (중립 이상)</span>
+                                </div>
+                                <div class="tech-indicator-item">
+                                    <span class="tech-ind-label">시장 변동성 상태</span>
+                                    <span class="tech-ind-val" id="tech-volatility">안정적 확장 국면</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+            </section>
+            
+            <!-- Right Column: Interactive Chart, Details, News Feed, Comments Section -->
+            <section class="right-column">
+                
+                <!-- Glowing Interactive Chart Panel -->
+                <article class="glass-card chart-card">
+                    <div class="chart-header">
+                        <div class="chart-title">
+                            <h3><i class="fa-solid fa-wave-square"></i> 실시간 가격 트렌드 및 흐름</h3>
+                            <p id="chart-subtitle">실시간 연동 데이터 시각화 차트</p>
+                        </div>
+                        
+                        <!-- Period filter buttons -->
+                        <div class="chart-filters">
+                            <button class="filter-btn" data-period="30m">30분</button>
+                            <button class="filter-btn" data-period="1h">1시간</button>
+                            <button class="filter-btn active" data-period="24h">24시간</button>
+                            <button class="filter-btn" data-period="7d">7일</button>
+                            <button class="filter-btn" data-period="30d">30일</button>
+                            <button class="filter-btn" data-period="6m">6개월</button>
+                            <button class="filter-btn" data-period="1y">1년</button>
+                            <button class="filter-btn" data-period="all">전체</button>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <canvas id="insight-chart"></canvas>
+                    </div>
+                </article>
+
+                <!-- Detailed Information and History Tabs Card -->
+                <article class="glass-card info-tab-card">
+                    <nav class="tab-nav">
+                        <button class="tab-link active" data-tab="info-tab">코인 정보 개요</button>
+                        <button class="tab-link" data-tab="history-tab">역사 및 주요 연혁</button>
+                        <button class="tab-link" data-tab="ai-tech-tab">AI 온체인 진단</button>
+                    </nav>
+                    
+                    <!-- Tab Panel 1: Information Overview -->
+                    <div class="tab-panel active" id="info-tab">
+                        <h4 id="info-coin-title">Bitcoin (BTC)</h4>
+                        <p id="info-coin-desc">코인 정보 데이터를 구성 중입니다...</p>
+                    </div>
+                    
+                    <!-- Tab Panel 2: History & Milestones -->
+                    <div class="tab-panel" id="history-tab">
+                        <h4>주요 히스토리 연혁</h4>
+                        <div class="coin-history-timeline" id="history-timeline">
+                            <!-- Timeline items injected dynamically -->
+                        </div>
+                    </div>
+                    
+                    <!-- Tab Panel 3: AI On-chain Diagnosis -->
+                    <div class="tab-panel" id="ai-tech-tab">
+                        <h4>AI 모델 온체인 지표 검진 결과</h4>
+                        <p id="ai-tech-desc">온체인 지표를 정량 분석 중입니다...</p>
+                    </div>
+                </article>
+
+                <!-- AI Intelligence News Feed Card -->
+                <article class="glass-card news-card">
+                    <div class="card-title-badge">
+                        <h3><i class="fa-solid fa-newspaper" style="color: var(--accent-cyan);"></i> AI 스마트 센티먼트 뉴스</h3>
+                        <span class="ai-pill" style="background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));">AI Aggregated</span>
+                    </div>
+                    
+                    <div class="news-feed" id="news-feed-container">
+                        <!-- News items will be loaded dynamically -->
+                        <div class="indicator" style="justify-content: center; border: none;">뉴스 데이터를 통합하는 중...</div>
+                    </div>
+                </article>
+
+                <!-- Community Insights & Comments Section -->
+                <article class="glass-card comments-card">
+                    <div class="card-title-badge">
+                        <h3><i class="fa-regular fa-comments" style="color: var(--accent-purple);"></i> 실시간 토론 및 인사이트 공유</h3>
+                        <span class="ai-pill">Community Board</span>
+                    </div>
+                    
+                    <!-- Sentiment Analytics Meter -->
+                    <div class="sentiment-analytics">
+                        <div class="analytics-title">
+                            <span>오늘의 소셜 투자 감정 지수</span>
+                            <span id="sentiment-percentage" style="color: var(--sentiment-bullish); font-weight: 700;">상승 0% / 하락 0%</span>
+                        </div>
+                        
+                        <div class="sentiment-bar-container">
+                            <div class="sentiment-bar-fill bullish-fill" id="sentiment-bullish-bar" style="width: 50%;"></div>
+                            <div class="sentiment-bar-fill bearish-fill" id="sentiment-bearish-bar" style="width: 50%;"></div>
+                        </div>
+                        
+                        <div class="analytics-breakdown">
+                            <span class="breakdown-item"><span class="breakdown-bullet bullish"></span>상승 호재 예측</span>
+                            <span class="breakdown-item"><span class="breakdown-bullet bearish"></span>하락 악재 경계</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Comment Listing Feed -->
+                    <div class="comments-list" id="comments-container">
+                        <!-- Comments will be loaded dynamically -->
+                    </div>
+                    
+                    <!-- Submit Comment Form -->
+                    <form class="comment-form" id="comment-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="author-input">닉네임</label>
+                                <input type="text" id="author-input" class="form-input" placeholder="익명" maxlength="15" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>투자 관점</label>
+                                <div class="sentiment-segment">
+                                    <button type="button" class="sentiment-btn bullish active" data-sentiment="bullish">호재/상승</button>
+                                    <button type="button" class="sentiment-btn neutral" data-sentiment="neutral">중립</button>
+                                    <button type="button" class="sentiment-btn bearish" data-sentiment="bearish">악재/하락</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="comment-text-input">코인 관점 공유</label>
+                            <textarea id="comment-text-input" class="form-input" placeholder="해당 코인에 대한 생각이나 통찰을 남겨주세요... 불건전한 언행은 AI 모니터링 시스템에 의해 필터링됩니다." maxlength="250" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn" id="submit-button">
+                            <i class="fa-solid fa-paper-plane"></i> 인사이트 등록하기
+                        </button>
+                    </form>
+                </article>
+
+            </section>
+            
+        </main>
+        
+        <!-- Subtle Footer Section detailing brand description -->
+        <footer class="dashboard-footer">
+            <div class="footer-content">
+                <p class="footer-brand"><i class="fa-solid fa-brain-circuit" style="color: var(--accent-cyan);"></i> NEURAPEX AI</p>
+                <p class="footer-desc">
+                    Neural (인공 신경망)과 Apex (최정점)의 결합으로 탄생한 <b>NEURAPEX AI</b>는 실시간 온체인 시황 분석 및 빗썸/코인원 스프레드 계산을 통해 
+                    최적의 "무릎에 사서 어깨에 파는" 안정적인 기대 손익비 투자 결정을 도모하는 지능형 가상화폐 거래 분석 프레임워크입니다.
+                </p>
+                <p class="footer-copy">&copy; 2026 NEURAPEX AI. Advanced Neural Intelligence Board.</p>
+            </div>
+        </footer>
+        
+    </div>
+
+    <!-- Script Link -->
+    <script src="app.js"></script>
+</body>
+</html>
