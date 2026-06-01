@@ -325,6 +325,40 @@ function setupEventListeners() {
     // Comment Form Submit Handler
     const commentForm = document.getElementById("comment-form");
     commentForm.addEventListener("submit", handleCommentSubmit);
+
+    // Mobile Bottom Navigation Click
+    const mobileNavItems = document.querySelectorAll(".nav-item");
+    const mobileViews = document.querySelectorAll("[data-mobile-view]");
+    
+    // Initialize default view (dashboard) for mobile
+    function updateMobileView(targetView) {
+        mobileViews.forEach(view => {
+            if (view.dataset.mobileView === targetView) {
+                view.classList.remove("mobile-hidden");
+            } else {
+                view.classList.add("mobile-hidden");
+            }
+        });
+    }
+    
+    // Call it initially so that it starts on dashboard
+    updateMobileView("dashboard");
+    
+    mobileNavItems.forEach(item => {
+        item.addEventListener("click", (e) => {
+            const btn = e.target.closest('.nav-item');
+            if (!btn) return;
+            
+            mobileNavItems.forEach(nav => nav.classList.remove("active"));
+            btn.classList.add("active");
+            
+            const targetView = btn.dataset.target;
+            updateMobileView(targetView);
+            
+            // Scroll to top when switching tabs on mobile
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    });
 }
 
 // Live ticking clock in header
