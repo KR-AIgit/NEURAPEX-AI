@@ -1444,6 +1444,14 @@ textarea.form-input {
         word-break: keep-all !important;
     }
 
+    /* Sentiment Analytics Title Mobile Layout Fix */
+    .analytics-title {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 0.3rem !important;
+        word-break: keep-all !important;
+    }
+
     /* Price Exchange Box layout: Stack vertically as 1-column grid to prevent clipping */
     .exchanges-row {
         grid-template-columns: 1fr !important;
